@@ -13,7 +13,7 @@ Note: Playlists are organised in months, but this is currently ignored
 	// dependencies
     var http = require('http')
     var YQL = require('yql')
-    var tests = require ('./test/tests')
+    var tests = require ('./test_modules/tests')
     var getSongs = require ('./getSongs')
     var listNum = process.argv[2]
 
