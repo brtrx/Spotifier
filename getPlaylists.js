@@ -13,6 +13,8 @@ Note: Playlists are organised in months, but this is currently ignored
 	// dependencies
     var http = require('http')
     var YQL = require('yql')
+    var tests = require ('./test/tests')
+    var getSongs = require ('./getSongs')
     var listNum = process.argv[2]
 
 	// this is a very specific application at the moment
@@ -39,7 +41,26 @@ Note: Playlists are organised in months, but this is currently ignored
 				urlArray.push({'date':element.div[0].p.content, 'url':element.a.href})
 			}
 		});
-		// Showing how to reference date and url separately
-		console.log("Number " + listNum + " of " + urlArray.length + "\n" + urlArray[listNum].date + " - " + urlArray[listNum].url)
+		
+		// Show result
+		console.log(
+			"\nRetrieved URL for playlist " + listNum + " of " + urlArray.length + "\n" 
+			+ "Date: " + urlArray[listNum].date + "\n" 
+			+ "URL: " + urlArray[listNum].url)
+		
+		// Confirm result
+		tests.isPlayListDataCorrect(urlArray[listNum].date,urlArray[listNum].url)
+		
+		// Get songs
+		getSongs (urlArray[listNum].url, function (songArray) {
+			songArray.forEach( function(element, index) {
+				console.log(
+					index + ": "
+					+ element.title + " by " 
+					+ element.artist 
+					)
+			})
+		})
+
 		
 	}) 

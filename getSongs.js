@@ -2,7 +2,7 @@
 
 /*
 
-Get each song from a particular playlist as an array [artist, [featured-artist,] song-title] 
+Given a playlist URL return an array of songs [artist, [featured-artist,] song-title] 
 
 - uses songsDiv variable to set the css selector to finding the div containing the list of songs 
 --- strong.innerhtml = artist 
@@ -21,8 +21,8 @@ Needs a:
 	// dependencies
     var http = require('http')
     var YQL = require('yql')
-	var pageURL = process.argv[2],
-		songsDIV = "p.list"
+	//var pageURL = process.argv[2]
+	var	songsDIV = "p.list"
 
 	// Uses YQL to get all the playlist urls within a particular css selector
 	function getPlaylist (siteURL, cssSelector, callback) {		
@@ -39,18 +39,14 @@ Needs a:
 	}
 
 	
+	module.exports = function getSongs (pageURL, callback) {	
 		getPlaylist (pageURL, songsDIV, function(res) {
-			//console.log(res)
-			//console.log(res[res.length-1].strong.length)
 
 			var songArray = []
 			var count = 0
 		
 			for (var i=0; i<res.length; i++) {
 				var slotSongs = res[i]
-			
-				// DEBUG
-				if (i==4) console.log(slotSongs)
 			
 				// for each song
 				for (var j=0; j<slotSongs.strong.length; j++) {
@@ -66,7 +62,6 @@ Needs a:
 					count++
 				}
 			}	
-			songArray.forEach( function(data) {
-				console.log(data)
-			})
+			callback(songArray)
 		})
+	}
