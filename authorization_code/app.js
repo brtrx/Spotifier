@@ -11,10 +11,16 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var fs = require('fs')
 
-var client_id = 'a7287245ac6a4d5fa9a1d08dff1b82b2'; // Your client id
-var client_secret = 'ea8c7aaee25c475c810c77e802c11b59'; // Your client secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var config = fs.readFileSync('../../spotifier-config.txt','utf8').toString()
+
+var client_id = config.client_id; // Client id
+var client_secret = config.client_secret; // Client secret
+var redirect_uri = config.redirect_uri; // Redirect uri
+
+console.log(config.config_id)
+
 
 /**
  * Generates a random string containing numbers and letters
