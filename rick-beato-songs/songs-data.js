@@ -119,3 +119,13 @@ const songsData = [
 
 // Extract all unique genres for filtering
 const allGenres = [...new Set(songsData.flatMap(song => song.genres))].sort();
+
+// Generate YouTube search URL for a song
+function getYouTubeURL(song) {
+    // Create a search query that will find the specific WMTSG episode
+    const searchQuery = `Rick Beato What Makes This Song Great ${song.song} ${song.artist}`;
+    return `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
+}
+
+// Rick Beato's channel URL
+const RICK_BEATO_CHANNEL = 'https://www.youtube.com/@RickBeato';

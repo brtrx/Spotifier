@@ -244,9 +244,14 @@
             border: 1px solid #d0d9ff;
         }
 
-        .spotify-link {
+        .links-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .spotify-link, .youtube-link {
             display: inline-block;
-            background: #1DB954;
             color: white;
             padding: 10px 20px;
             border-radius: 25px;
@@ -254,6 +259,13 @@
             font-weight: 600;
             transition: all 0.3s;
             font-size: 0.95em;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .spotify-link {
+            background: #1DB954;
         }
 
         .spotify-link:hover {
@@ -261,7 +273,16 @@
             transform: scale(1.05);
         }
 
-        .spotify-link.loading {
+        .youtube-link {
+            background: #FF0000;
+        }
+
+        .youtube-link:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .spotify-link.loading, .youtube-link.loading {
             background: #ccc;
             pointer-events: none;
         }
@@ -322,7 +343,7 @@
             }
         }
 
-        .spotify-icon {
+        .link-icon {
             display: inline-block;
             width: 16px;
             height: 16px;
@@ -335,13 +356,13 @@
     <div class="container">
         <header>
             <h1>Rick Beato's<br>"What Makes This Song Great?"</h1>
-            <p class="subtitle">Complete Episode List with Spotify Links & Genre Filtering</p>
+            <p class="subtitle">Complete Episode List with YouTube & Spotify Links + Genre Filtering</p>
         </header>
 
         <div class="info">
             <strong>About this series:</strong> "What Makes This Song Great?" is Rick Beato's acclaimed YouTube series
-            where he breaks down the musical elements that make iconic songs so memorable. This page compiles all episodes
-            from the series with direct Spotify links to each track. Filter by genre to discover songs across different styles!
+            where he breaks down the musical elements that make iconic songs so memorable. This page compiles all 115 episodes
+            with direct links to watch Rick's analysis on YouTube and listen to the tracks on Spotify. Filter by genre to discover songs across different styles!
         </div>
 
         <div class="stats">
@@ -423,7 +444,7 @@
         }
 
         // Create a song card element
-        function createSongCard(songData, spotifyUrl) {
+        function createSongCard(songData, spotifyUrl, youtubeUrl) {
             const genreTagsHtml = songData.genres.map(genre =>
                 `<span class="genre-tag">${genre}</span>`
             ).join('');
@@ -440,12 +461,20 @@
                     <div class="genre-tags">
                         ${genreTagsHtml}
                     </div>
-                    <a href="${spotifyUrl}" target="_blank" class="spotify-link">
-                        <svg class="spotify-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
-                        </svg>
-                        Listen on Spotify
-                    </a>
+                    <div class="links-container">
+                        <a href="${youtubeUrl}" target="_blank" class="youtube-link" title="Watch Rick Beato's analysis on YouTube">
+                            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                            Watch Episode
+                        </a>
+                        <a href="${spotifyUrl}" target="_blank" class="spotify-link" title="Listen on Spotify">
+                            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                            </svg>
+                            Listen on Spotify
+                        </a>
+                    </div>
                 </div>
             `;
         }
@@ -561,7 +590,8 @@
             const songCards = await Promise.all(
                 songsData.map(async (song) => {
                     const spotifyUrl = await searchSpotifyTrack(song.artist, song.song);
-                    return createSongCard(song, spotifyUrl);
+                    const youtubeUrl = getYouTubeURL(song);
+                    return createSongCard(song, spotifyUrl, youtubeUrl);
                 })
             );
 

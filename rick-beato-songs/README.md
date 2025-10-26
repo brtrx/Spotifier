@@ -1,13 +1,14 @@
 # Rick Beato's "What Makes This Song Great?" - Complete Episode List
 
-A beautiful, interactive website listing all 115 episodes of Rick Beato's acclaimed YouTube series "What Makes This Song Great?" with direct Spotify links for each track.
+A beautiful, interactive website listing all 115 episodes of Rick Beato's acclaimed YouTube series "What Makes This Song Great?" with direct links to watch the YouTube episodes and listen to tracks on Spotify.
 
 ## Features
 
 - **Complete Episode List**: All 115 episodes with song titles and artists
+- **YouTube Episode Links**: Direct links to watch Rick Beato's analysis for each song
+- **Spotify Integration**: Direct links to listen to each song on Spotify
 - **Genre Classification**: Each song is tagged with multiple genres (60+ genres total)
 - **Multi-Genre Filtering**: Filter songs by selecting one or multiple genres simultaneously
-- **Spotify Integration**: Direct links to listen to each song on Spotify
 - **Search Functionality**: Quickly find songs by title, artist, or episode number
 - **Combined Filtering**: Search and genre filters work together for precise results
 - **Responsive Design**: Beautiful gradient design that works on all devices
@@ -29,7 +30,8 @@ A beautiful, interactive website listing all 115 episodes of Rick Beato's acclai
 3. Click on genre buttons to filter songs by one or more genres
 4. Use the search bar to filter songs by title, artist, or episode number
 5. Combine search and genre filters for precise results
-6. Click "Listen on Spotify" to hear any track
+6. Click "Watch Episode" to see Rick Beato's analysis on YouTube
+7. Click "Listen on Spotify" to hear the track on Spotify
 
 ### With Local Server (Recommended)
 

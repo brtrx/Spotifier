@@ -82,6 +82,12 @@ The server will start at http://localhost:3000
   - Episode number
 - Combine search with genre filters for precise results
 
+### YouTube Episode Links (NEW!)
+- Click "Watch Episode" to view Rick Beato's full analysis on YouTube
+- YouTube search links help you find the specific "What Makes This Song Great" episode
+- Links open in a new tab
+- Works on desktop and mobile
+
 ### Spotify Links
 - Click "Listen on Spotify" to hear any track
 - Links open in a new tab
@@ -90,6 +96,7 @@ The server will start at http://localhost:3000
 ### Responsive Design
 - Beautiful gradient background
 - Card-based layout with genre tags
+- Red YouTube buttons and green Spotify buttons for easy identification
 - Mobile-friendly interface
 - Smooth animations and hover effects
 
