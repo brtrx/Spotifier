@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test YouTube Links</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .youtube-link {
+            background: #FF0000;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        .spotify-link {
+            background: #1DB954;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Page - YouTube and Spotify Links</h1>
+    <p>If you can see both buttons below, the links are working:</p>
+    <div id="test"></div>
+
+    <script src="songs-data.js"></script>
+    <script>
+        const testSong = songsData[0]; // Blink-182
+        const youtubeUrl = getYouTubeURL(testSong);
+        const spotifyUrl = `https://open.spotify.com/search/${encodeURIComponent(testSong.song + ' ' + testSong.artist)}`;
+
+        document.getElementById('test').innerHTML = `
+            <h2>Episode ${testSong.episode}: ${testSong.song} - ${testSong.artist}</h2>
+            <a href="${youtubeUrl}" target="_blank" class="youtube-link">Watch Episode on YouTube</a>
+            <a href="${spotifyUrl}" target="_blank" class="spotify-link">Listen on Spotify</a>
+            <p><strong>YouTube URL:</strong> ${youtubeUrl}</p>
+            <p><strong>Spotify URL:</strong> ${spotifyUrl}</p>
+        `;
+    </script>
+</body>
+</html>
