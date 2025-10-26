@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -57,7 +57,7 @@
         }
 
         .search-container {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         #searchInput {
@@ -73,6 +73,79 @@
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .genre-filter-section {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .genre-filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .genre-filter-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .clear-filters-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .clear-filters-btn:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+
+        .clear-filters-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .genre-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .genre-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .genre-btn:hover {
+            border-color: #667eea;
+            background: #f0f3ff;
+            transform: translateY(-2px);
+        }
+
+        .genre-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
         }
 
         .stats {
@@ -154,6 +227,23 @@
             margin-bottom: 15px;
         }
 
+        .genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .genre-tag {
+            background: #e8ecff;
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            border: 1px solid #d0d9ff;
+        }
+
         .spotify-link {
             display: inline-block;
             background: #1DB954;
@@ -224,6 +314,12 @@
             .stats {
                 flex-direction: column;
             }
+
+            .genre-filter-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
         }
 
         .spotify-icon {
@@ -239,13 +335,13 @@
     <div class="container">
         <header>
             <h1>Rick Beato's<br>"What Makes This Song Great?"</h1>
-            <p class="subtitle">Complete Episode List with Spotify Links</p>
+            <p class="subtitle">Complete Episode List with Spotify Links & Genre Filtering</p>
         </header>
 
         <div class="info">
             <strong>About this series:</strong> "What Makes This Song Great?" is Rick Beato's acclaimed YouTube series
             where he breaks down the musical elements that make iconic songs so memorable. This page compiles all episodes
-            from the series with direct Spotify links to each track.
+            from the series with direct Spotify links to each track. Filter by genre to discover songs across different styles!
         </div>
 
         <div class="stats">
@@ -256,6 +352,10 @@
             <div class="stat-box">
                 <span class="stat-number" id="displayedSongs">115</span>
                 <span class="stat-label">Songs Shown</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="totalGenres">0</span>
+                <span class="stat-label">Genres</span>
             </div>
         </div>
 
@@ -268,6 +368,14 @@
             >
         </div>
 
+        <div class="genre-filter-section">
+            <div class="genre-filter-header">
+                <div class="genre-filter-title">Filter by Genre (select multiple)</div>
+                <button class="clear-filters-btn" id="clearFiltersBtn" disabled>Clear Filters</button>
+            </div>
+            <div class="genre-filters" id="genreFilters"></div>
+        </div>
+
         <div id="loadingMessage" class="loading-message">
             Loading Spotify links...
         </div>
@@ -275,7 +383,7 @@
         <div class="songs-grid" id="songsContainer"></div>
 
         <div id="noResults" class="no-results" style="display: none;">
-            No songs found matching your search.
+            No songs found matching your search and filters.
         </div>
 
         <footer>
@@ -293,20 +401,19 @@
     <script src="songs-data.js"></script>
     <script>
         // Spotify API configuration
-        const SPOTIFY_CLIENT_ID = '011CUVnHck543iiynqp48jGd'; // You'll need to replace this
+        const SPOTIFY_CLIENT_ID = '011CUVnHck543iiynqp48jGd';
         let spotifyAccessToken = null;
+        let selectedGenres = new Set();
 
         // Get Spotify access token using Client Credentials Flow
         async function getSpotifyToken() {
             // For demo purposes, we'll create direct search links
-            // In production, you'd implement proper OAuth flow
             return 'demo-mode';
         }
 
         // Search for a track on Spotify and return the URL
         async function searchSpotifyTrack(artist, song) {
             try {
-                // Create a direct Spotify search URL
                 const searchQuery = encodeURIComponent(`${song} ${artist}`);
                 return `https://open.spotify.com/search/${searchQuery}`;
             } catch (error) {
@@ -317,11 +424,22 @@
 
         // Create a song card element
         function createSongCard(songData, spotifyUrl) {
+            const genreTagsHtml = songData.genres.map(genre =>
+                `<span class="genre-tag">${genre}</span>`
+            ).join('');
+
             return `
-                <div class="song-card" data-episode="${songData.episode}" data-artist="${songData.artist.toLowerCase()}" data-song="${songData.song.toLowerCase()}">
+                <div class="song-card"
+                     data-episode="${songData.episode}"
+                     data-artist="${songData.artist.toLowerCase()}"
+                     data-song="${songData.song.toLowerCase()}"
+                     data-genres="${songData.genres.join('|').toLowerCase()}">
                     <div class="episode-number">EP ${songData.episode}</div>
                     <div class="song-title">${songData.song}</div>
                     <div class="artist-name">${songData.artist}</div>
+                    <div class="genre-tags">
+                        ${genreTagsHtml}
+                    </div>
                     <a href="${spotifyUrl}" target="_blank" class="spotify-link">
                         <svg class="spotify-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
@@ -332,10 +450,109 @@
             `;
         }
 
+        // Initialize genre filter buttons
+        function initializeGenreFilters() {
+            const genreFiltersContainer = document.getElementById('genreFilters');
+            const totalGenresElement = document.getElementById('totalGenres');
+
+            totalGenresElement.textContent = allGenres.length;
+
+            allGenres.forEach(genre => {
+                const button = document.createElement('button');
+                button.className = 'genre-btn';
+                button.textContent = genre;
+                button.dataset.genre = genre;
+
+                button.addEventListener('click', () => {
+                    toggleGenreFilter(genre, button);
+                });
+
+                genreFiltersContainer.appendChild(button);
+            });
+        }
+
+        // Toggle genre filter
+        function toggleGenreFilter(genre, button) {
+            if (selectedGenres.has(genre)) {
+                selectedGenres.delete(genre);
+                button.classList.remove('active');
+            } else {
+                selectedGenres.add(genre);
+                button.classList.add('active');
+            }
+
+            updateClearFiltersButton();
+            applyFilters();
+        }
+
+        // Update clear filters button state
+        function updateClearFiltersButton() {
+            const clearBtn = document.getElementById('clearFiltersBtn');
+            clearBtn.disabled = selectedGenres.size === 0;
+        }
+
+        // Clear all genre filters
+        function clearAllFilters() {
+            selectedGenres.clear();
+            document.querySelectorAll('.genre-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            updateClearFiltersButton();
+            applyFilters();
+        }
+
+        // Apply all filters (search + genre)
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const allCards = document.querySelectorAll('.song-card');
+            const displayedCount = document.getElementById('displayedSongs');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            allCards.forEach(card => {
+                const episode = card.dataset.episode;
+                const artist = card.dataset.artist;
+                const song = card.dataset.song;
+                const cardGenres = card.dataset.genres.split('|');
+
+                // Check search match
+                const searchMatch = !searchTerm ||
+                    episode.includes(searchTerm) ||
+                    artist.includes(searchTerm) ||
+                    song.includes(searchTerm);
+
+                // Check genre match
+                let genreMatch = true;
+                if (selectedGenres.size > 0) {
+                    // Song must have at least one of the selected genres
+                    genreMatch = Array.from(selectedGenres).some(selectedGenre =>
+                        cardGenres.includes(selectedGenre.toLowerCase())
+                    );
+                }
+
+                // Show card only if both conditions are met
+                if (searchMatch && genreMatch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            displayedCount.textContent = visibleCount;
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
         // Initialize the page
         async function init() {
             const container = document.getElementById('songsContainer');
             const loadingMessage = document.getElementById('loadingMessage');
+
+            // Initialize genre filters
+            initializeGenreFilters();
+
+            // Setup clear filters button
+            document.getElementById('clearFiltersBtn').addEventListener('click', clearAllFilters);
 
             // Get Spotify token (demo mode for now)
             spotifyAccessToken = await getSpotifyToken();
@@ -359,34 +576,9 @@
         // Setup search functionality
         function setupSearch() {
             const searchInput = document.getElementById('searchInput');
-            const displayedCount = document.getElementById('displayedSongs');
-            const noResults = document.getElementById('noResults');
 
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const allCards = document.querySelectorAll('.song-card');
-                let visibleCount = 0;
-
-                allCards.forEach(card => {
-                    const episode = card.dataset.episode;
-                    const artist = card.dataset.artist;
-                    const song = card.dataset.song;
-
-                    const matches =
-                        episode.includes(searchTerm) ||
-                        artist.includes(searchTerm) ||
-                        song.includes(searchTerm);
-
-                    if (matches) {
-                        card.style.display = 'block';
-                        visibleCount++;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                displayedCount.textContent = visibleCount;
-                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            searchInput.addEventListener('input', () => {
+                applyFilters();
             });
         }
 

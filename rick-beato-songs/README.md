@@ -5,11 +5,14 @@ A beautiful, interactive website listing all 115 episodes of Rick Beato's acclai
 ## Features
 
 - **Complete Episode List**: All 115 episodes with song titles and artists
+- **Genre Classification**: Each song is tagged with multiple genres (60+ genres total)
+- **Multi-Genre Filtering**: Filter songs by selecting one or multiple genres simultaneously
 - **Spotify Integration**: Direct links to listen to each song on Spotify
 - **Search Functionality**: Quickly find songs by title, artist, or episode number
+- **Combined Filtering**: Search and genre filters work together for precise results
 - **Responsive Design**: Beautiful gradient design that works on all devices
-- **Real-time Filtering**: Instant search results as you type
-- **Episode Statistics**: See total episodes and current search results
+- **Real-time Filtering**: Instant search and filter results as you interact
+- **Episode Statistics**: See total episodes, current search results, and genre count
 
 ## What's Included
 
@@ -23,8 +26,10 @@ A beautiful, interactive website listing all 115 episodes of Rick Beato's acclai
 
 1. Simply open `index.html` in any modern web browser
 2. The website will load with all 115 episodes
-3. Click "Listen on Spotify" to hear any track
+3. Click on genre buttons to filter songs by one or more genres
 4. Use the search bar to filter songs by title, artist, or episode number
+5. Combine search and genre filters for precise results
+6. Click "Listen on Spotify" to hear any track
 
 ### With Local Server (Recommended)
 
@@ -70,14 +75,34 @@ Each episode provides valuable insights for music enthusiasts, producers, and mu
 
 ## Episode Highlights
 
-The series covers a wide range of artists and genres including:
+The series covers a wide range of artists and over 60 different music genres including:
 
-- Classic Rock: Led Zeppelin, The Beatles, Pink Floyd, Queen
-- Alternative Rock: Nirvana, Pearl Jam, Radiohead, Foo Fighters
-- Progressive Rock: Rush, Tool, Yes, Genesis
-- Pop & Soul: Elton John, Stevie Wonder, Adele
-- Metal: Metallica, Tool, Slipknot, Megadeth
-- And many more!
+- **Classic Rock**: Led Zeppelin, The Beatles, Pink Floyd, Queen, The Who
+- **Alternative Rock**: Nirvana, Pearl Jam, Radiohead, Foo Fighters, The Cure
+- **Progressive Rock**: Rush, Tool, Yes, Genesis, Kansas
+- **Grunge**: Nirvana, Pearl Jam, Soundgarden, Alice In Chains
+- **Metal**: Metallica (Thrash Metal), Slipknot (Nu Metal), Pantera (Groove Metal)
+- **Pop & Soul**: Elton John, Stevie Wonder, Adele, Seal
+- **New Wave**: The Police, Tears for Fears, The Cars
+- **Funk Rock**: Red Hot Chili Peppers, Jane's Addiction
+- **Jazz Fusion**: Steely Dan
+- **And many more genres**: Pop Punk, Industrial Rock, Folk Rock, Singer-Songwriter, Britpop, and more!
+
+### Genre Categories Available
+
+The website includes 60+ genres for filtering:
+- Alternative Metal, Alternative Rock, Arena Rock, Art Rock
+- Blues Rock, Britpop, Classic Rock, Dance, Djent, EDM
+- Electronic, Folk, Folk Rock, Funk, Funk Metal, Funk Rock
+- Garage Rock, Glam Metal, Groove Metal, Grunge
+- Hard Rock, Heartland Rock, Heavy Metal, Indie Rock
+- Industrial Rock, Instrumental Rock, Jangle Pop, Jazz Fusion, Jazz Rock
+- New Wave, Nu Metal, Opera Rock, Pop, Pop Punk, Pop Rock
+- Post-Grunge, Power Pop, Progressive Metal, Progressive Rock
+- Psychedelic Rock, R&B, Rap Metal, Rock
+- Singer-Songwriter, Sludge Metal, Soft Rock, Soul, Space Rock
+- Stoner Rock, Synth-pop, Thrash Metal
+- And more!
 
 ## Credits
 

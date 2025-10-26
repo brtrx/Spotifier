@@ -65,11 +65,22 @@ The server will start at http://localhost:3000
 
 ## Features
 
+### Genre Filtering (NEW!)
+- Filter songs by musical genre
+- Select multiple genres at once to see songs that match ANY of the selected genres
+- Over 60 genres to choose from including:
+  - Rock genres: Classic Rock, Hard Rock, Progressive Rock, Alternative Rock
+  - Metal genres: Heavy Metal, Thrash Metal, Nu Metal, Progressive Metal
+  - Grunge, New Wave, Pop, Soul, Funk Rock, and many more!
+- Click "Clear Filters" to reset all genre selections
+- Genre tags displayed on each song card
+
 ### Search Functionality
 - Type in the search box to filter songs by:
   - Song title
   - Artist name
   - Episode number
+- Combine search with genre filters for precise results
 
 ### Spotify Links
 - Click "Listen on Spotify" to hear any track
@@ -78,7 +89,7 @@ The server will start at http://localhost:3000
 
 ### Responsive Design
 - Beautiful gradient background
-- Card-based layout
+- Card-based layout with genre tags
 - Mobile-friendly interface
 - Smooth animations and hover effects
 
