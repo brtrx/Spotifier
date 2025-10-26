@@ -1,0 +1,23 @@
+{
+  "name": "rick-beato-song-list",
+  "version": "1.0.0",
+  "description": "Interactive website listing all Rick Beato 'What Makes This Song Great' episodes with Spotify links",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "rick-beato",
+    "music",
+    "spotify",
+    "what-makes-this-song-great"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.0",
+    "request": "^2.88.0",
+    "cors": "^2.8.5"
+  }
+}
